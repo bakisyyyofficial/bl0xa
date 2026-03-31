@@ -3,89 +3,53 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BL0Xa V2</title>
+<title>BL0Xa V3</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 
 <style>
 
-/* ================= RESET ================= */
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
-
-/* ================= ROOT COLORS ================= */
+/* ================= ROOT ================= */
 
 :root{
 --main:#7c3aed;
---accent:#00f0ff;
---pink:#ff00aa;
 --bg:#050505;
+--text:#ffffff;
 }
 
-/* ================= BODY ================= */
+/* ================= BASE ================= */
+
+*{margin:0;padding:0;box-sizing:border-box;}
 
 body{
 font-family:'Orbitron',sans-serif;
-background: radial-gradient(circle at top,#0f0f1a,#050505);
-color:#fff;
-overflow-x:hidden;
-}
-
-/* ================= ANIMATED BG ================= */
-
-body::before{
-content:"";
-position:fixed;
-width:200%;
-height:200%;
-background: linear-gradient(45deg,#7c3aed,#ff00aa,#00f0ff);
-opacity:0.07;
-animation:moveBg 15s linear infinite;
-z-index:-2;
-}
-
-@keyframes moveBg{
-0%{transform:translate(0,0);}
-50%{transform:translate(-20%,-20%);}
-100%{transform:translate(0,0);}
+background:var(--bg);
+color:var(--text);
+transition:0.4s;
 }
 
 /* ================= HEADER ================= */
 
 header{
-min-height:100vh;
 display:flex;
 justify-content:space-between;
 align-items:center;
-padding:60px;
+padding:40px;
+min-height:100vh;
 }
 
-/* ================= LEFT ================= */
+/* ================= TEXT ================= */
 
-.left{
-max-width:600px;
-}
-
-.nickname{
-font-size:52px;
-background:linear-gradient(90deg,#7c3aed,#00f0ff);
+h1{
+font-size:50px;
+background:linear-gradient(90deg,var(--main),#fff);
 -webkit-background-clip:text;
 color:transparent;
-text-shadow:0 0 25px rgba(124,58,237,0.7);
 }
 
-.subtitle{
-margin-top:15px;
-opacity:0.8;
-}
-
-.description{
-margin-top:25px;
-line-height:1.6;
+p{
+margin-top:20px;
+max-width:500px;
 color:#ccc;
 }
 
@@ -94,115 +58,41 @@ color:#ccc;
 .btn{
 display:inline-block;
 margin:10px;
-padding:12px 20px;
-border-radius:10px;
-background:rgba(255,255,255,0.05);
+padding:10px 15px;
 border:1px solid var(--main);
-color:#fff;
-text-decoration:none;
+border-radius:10px;
+cursor:pointer;
 transition:0.3s;
-backdrop-filter:blur(10px);
 }
 
 .btn:hover{
-transform:translateY(-3px);
-box-shadow:0 0 20px var(--main);
 background:var(--main);
 }
 
 /* ================= RIGHT ================= */
 
-.right{
+#cube{
 width:350px;
 height:350px;
 }
 
-/* ================= SECTION ================= */
+/* ================= TOP PANEL ================= */
 
-section{
-padding:80px 20px;
-text-align:center;
-}
-
-.section-title{
-font-size:32px;
-margin-bottom:30px;
-background:linear-gradient(90deg,#ff00aa,#00f0ff);
--webkit-background-clip:text;
-color:transparent;
-}
-
-/* ================= CARDS ================= */
-
-.card{
-display:inline-block;
-margin:15px;
-padding:25px;
-width:260px;
-border-radius:15px;
-background:rgba(255,255,255,0.05);
-border:1px solid rgba(255,255,255,0.1);
-backdrop-filter:blur(12px);
-transition:0.4s;
-}
-
-.card:hover{
-transform:translateY(-10px) scale(1.05);
-box-shadow:0 0 25px var(--pink);
-}
-
-/* ================= STATS ================= */
-
-.stats .card{
-font-size:18px;
-}
-
-/* ================= SKILLS ================= */
-
-.skill{
-margin:15px auto;
-max-width:400px;
-text-align:left;
-}
-
-.bar{
-height:10px;
-background:#111;
-border-radius:10px;
-overflow:hidden;
-}
-
-.bar div{
-height:100%;
-background:linear-gradient(90deg,#7c3aed,#00f0ff);
-width:0;
-transition:2s;
-}
-
-/* ================= FOOTER ================= */
-
-footer{
-text-align:center;
-padding:40px;
-color:#666;
+.panel{
+position:fixed;
+top:10px;
+right:10px;
+z-index:10;
 }
 
 /* ================= MOBILE ================= */
 
 @media(max-width:900px){
-
-header{
-flex-direction:column;
-text-align:center;
+header{flex-direction:column;text-align:center;}
+#cube{margin-top:40px;}
 }
 
-.right{
-margin-top:50px;
-}
-
-}
-
-/* ================= EXTRA LINES FOR LENGTH ================= */
+/* ================= EXTRA LINES ================= */
 /* 1 */
 /* 2 */
 /* 3 */
@@ -233,6 +123,160 @@ margin-top:50px;
 /* 28 */
 /* 29 */
 /* 30 */
+
+</style>
+</head>
+
+<body>
+
+<div class="panel">
+<div class="btn" onclick="toggleTheme()">Theme</div>
+<div class="btn" onclick="toggleLang()">RU/EN</div>
+</div>
+
+<header>
+
+<div>
+<h1 id="title">BL0Xa</h1>
+<p id="desc">
+Я медиа-блогер по Minecraft Bedrock и Java разработчик.
+Настройка серверов и плагинов — моя зона.
+</p>
+
+<div class="btn" onclick="copyTG()">Telegram</div>
+</div>
+
+<div id="cube"></div>
+
+</header>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+<script>
+
+/* ================= LANGUAGE ================= */
+
+let lang = "ru";
+
+function toggleLang(){
+lang = lang === "ru" ? "en" : "ru";
+
+if(lang==="ru"){
+title.innerText="BL0Xa";
+desc.innerText="Я медиа-блогер по Minecraft Bedrock и Java разработчик.";
+}else{
+title.innerText="BL0Xa";
+desc.innerText="Minecraft Bedrock media creator & Java developer.";
+}
+}
+
+/* ================= THEME ================= */
+
+let dark = true;
+
+function toggleTheme(){
+if(dark){
+document.documentElement.style.setProperty('--main','#00f0ff');
+document.documentElement.style.setProperty('--bg','#ffffff');
+document.documentElement.style.setProperty('--text','#000');
+}else{
+document.documentElement.style.setProperty('--main','#7c3aed');
+document.documentElement.style.setProperty('--bg','#050505');
+document.documentElement.style.setProperty('--text','#fff');
+}
+dark = !dark;
+}
+
+/* ================= COPY ================= */
+
+function copyTG(){
+navigator.clipboard.writeText("@otxao");
+alert("copied");
+}
+
+/* ================= THREE ================= */
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75,1,0.1,1000);
+
+const renderer = new THREE.WebGLRenderer({alpha:true,antialias:true});
+renderer.setSize(350,350);
+cube.appendChild(renderer.domElement);
+
+const geo = new THREE.BoxGeometry();
+const mat = new THREE.MeshStandardMaterial({
+color:0x7c3aed,
+metalness:0.8,
+roughness:0.2,
+emissive:0x220044
+});
+
+const cubeMesh = new THREE.Mesh(geo,mat);
+scene.add(cubeMesh);
+
+const light = new THREE.PointLight(0xffffff,1);
+light.position.set(5,5,5);
+scene.add(light);
+
+camera.position.z=3;
+
+/* MOUSE */
+
+let mx=0,my=0;
+
+document.addEventListener("mousemove",(e)=>{
+mx=(e.clientX/window.innerWidth)-0.5;
+my=(e.clientY/window.innerHeight)-0.5;
+});
+
+/* ANIMATE */
+
+let speed=0.01;
+
+function animate(){
+requestAnimationFrame(animate);
+
+cubeMesh.rotation.x += (my*2 - cubeMesh.rotation.x)*0.05;
+cubeMesh.rotation.y += speed + (mx*2 - cubeMesh.rotation.y)*0.05;
+
+renderer.render(scene,camera);
+}
+
+animate();
+
+/* HOVER */
+
+renderer.domElement.addEventListener("mouseenter",()=>{
+mat.emissive.setHex(0xff00aa);
+});
+
+renderer.domElement.addEventListener("mouseleave",()=>{
+mat.emissive.setHex(0x220044);
+});
+
+/* DOUBLE CLICK EASTER EGG */
+
+renderer.domElement.addEventListener("dblclick",()=>{
+speed = 0.2;
+setTimeout(()=>speed=0.01,2000);
+});
+
+/* KONAMI CODE */
+
+let keys=[];
+const code="ArrowUpArrowUpArrowDownArrowDownArrowLeftArrowRightArrowLeftArrowRightba";
+
+document.addEventListener("keydown",(e)=>{
+keys.push(e.key);
+keys.splice(-code.length-1, keys.length-code.length);
+
+if(keys.join("").includes(code)){
+document.body.style.filter="hue-rotate(180deg)";
+alert("PRO MODE ACTIVATED");
+}
+});
+
+/* EXTRA */
 /* 31 */
 /* 32 */
 /* 33 */
@@ -243,165 +287,6 @@ margin-top:50px;
 /* 38 */
 /* 39 */
 /* 40 */
-/* 41 */
-/* 42 */
-/* 43 */
-/* 44 */
-/* 45 */
-/* 46 */
-/* 47 */
-/* 48 */
-/* 49 */
-/* 50 */
-
-</style>
-</head>
-
-<body>
-
-<header>
-
-<div class="left">
-
-<h1 class="nickname">BL0Xa</h1>
-
-<div class="subtitle">Minecraft Bedrock Creator & Java Dev</div>
-
-<div class="description">
-Я не просто делаю контент — я создаю системы.
-Пока другие копируют идеи, я строю сервера, пишу плагины
-и делаю проекты, которые реально работают.
-<br><br>
-Bl0Xa — это уровень, где код встречается с креативом.
-</div>
-
-<div>
-<div class="btn" onclick="copyTG()">Telegram ЛС</div>
-<a class="btn" href="https://t.me/BL0Xaoff">Telegram</a>
-<a class="btn" href="https://www.tiktok.com/@bl0xa_off">TikTok</a>
-<a class="btn" href="https://steamcommunity.com/profiles/76561199581662267/">Steam</a>
-</div>
-
-</div>
-
-<div class="right" id="cube"></div>
-
-</header>
-
-<section class="stats">
-
-<h2 class="section-title">Статы</h2>
-
-<div class="card">🔥 3+ года опыта</div>
-<div class="card">⚙️ 50+ серверов</div>
-<div class="card">🎥 Контент creator</div>
-<div class="card">💻 Java Dev</div>
-
-</section>
-
-<section>
-
-<h2 class="section-title">Навыки</h2>
-
-<div class="skill">
-Java
-<div class="bar"><div data-width="90%"></div></div>
-</div>
-
-<div class="skill">
-Minecraft Servers
-<div class="bar"><div data-width="95%"></div></div>
-</div>
-
-<div class="skill">
-Content Creation
-<div class="bar"><div data-width="85%"></div></div>
-</div>
-
-</section>
-
-<footer>© BL0Xa</footer>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-
-<script>
-
-/* COPY */
-function copyTG(){
-navigator.clipboard.writeText("@otxao");
-alert("Скопировано!");
-}
-
-/* SKILLS ANIMATION */
-window.addEventListener("scroll",()=>{
-document.querySelectorAll(".bar div").forEach(el=>{
-el.style.width=el.dataset.width;
-});
-});
-
-/* THREE CUBE */
-
-const scene=new THREE.Scene();
-const camera=new THREE.PerspectiveCamera(75,1,0.1,1000);
-
-const renderer=new THREE.WebGLRenderer({alpha:true});
-renderer.setSize(350,350);
-document.getElementById("cube").appendChild(renderer.domElement);
-
-const geometry=new THREE.BoxGeometry();
-
-const material=new THREE.MeshBasicMaterial({
-color:0x7c3aed,
-wireframe:true
-});
-
-const cube=new THREE.Mesh(geometry,material);
-scene.add(cube);
-
-camera.position.z=3;
-
-function animate(){
-requestAnimationFrame(animate);
-
-cube.rotation.x+=0.01;
-cube.rotation.y+=0.01;
-
-renderer.render(scene,camera);
-}
-
-animate();
-
-/* HOVER */
-
-renderer.domElement.addEventListener("mouseenter",()=>{
-cube.scale.set(1.4,1.4,1.4);
-});
-
-renderer.domElement.addEventListener("mouseleave",()=>{
-cube.scale.set(1,1,1);
-});
-
-/* EXTRA LINES */
-/* 51 */
-/* 52 */
-/* 53 */
-/* 54 */
-/* 55 */
-/* 56 */
-/* 57 */
-/* 58 */
-/* 59 */
-/* 60 */
-/* 61 */
-/* 62 */
-/* 63 */
-/* 64 */
-/* 65 */
-/* 66 */
-/* 67 */
-/* 68 */
-/* 69 */
-/* 70 */
 
 </script>
 
