@@ -3,343 +3,570 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BAKISYYY | Cyber-Minimalism</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&family=Syncopate:wght@400;700&family=JetBrains+Mono:wght@300;500&display=swap" rel="stylesheet">
+    <title>Bl0Xa | Professional Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Montserrat:wght@300;600;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* ================================================
-        ELITE STYLING & FX
-        ================================================
+        /* ========================================
+           CSS VARIABLES & RESET
+           ========================================
         */
         :root {
-            --accent-cyan: #00f2ff;
-            --accent-blue: #0066ff;
-            --glass-bg: rgba(5, 5, 5, 0.75);
-            --glass-border: rgba(0, 242, 255, 0.2);
+            --primary-bg: #050505;
+            --accent-color: #00f2ff; /* Neon Cyan */
+            --secondary-accent: #7000ff; /* Purple */
+            --text-main: #ffffff;
+            --text-dim: #b0b0b0;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --neon-shadow: 0 0 15px rgba(0, 242, 255, 0.5);
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            outline: none;
         }
 
         body {
-            background-color: #020202;
-            color: #ffffff;
-            font-family: 'Inter', sans-serif;
-            overflow: hidden; /* Частицы на весь экран */
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-main);
+            overflow-x: hidden;
+            line-height: 1.6;
         }
 
-        /* Главная карточка с неоновым контуром */
-        .main-card {
-            background: var(--glass-bg);
-            backdrop-filter: blur(30px);
-            -webkit-backdrop-filter: blur(30px);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            position: relative;
-            z-index: 10;
-            width: 100%;
-            max-width: 400px;
-            padding: 2.5rem;
-            box-shadow: 0 0 40px rgba(0, 0, 0, 0.8), 
-                        inset 0 0 20px rgba(0, 242, 255, 0.05);
-            transition: transform 0.1s ease-out;
+        ::-webkit-scrollbar {
+            width: 8px;
         }
-
-        /* Пиздатое свечение по краям */
-        .main-card::after {
-            content: '';
-            position: absolute;
-            inset: -1px;
-            background: linear-gradient(45deg, var(--accent-cyan), transparent, var(--accent-blue), transparent);
-            border-radius: 20px;
-            z-index: -1;
-            opacity: 0.3;
+        ::-webkit-scrollbar-track {
+            background: #0a0a0a;
         }
-
-        /* Глитч для BAKISYYY */
-        .glitch-text {
-            font-family: 'Syncopate', sans-serif;
-            font-weight: 700;
-            letter-spacing: 0.3em;
-            text-transform: uppercase;
-            position: relative;
-            text-shadow: 2px 2px var(--accent-blue);
-            animation: text-glitch 3s infinite;
-        }
-
-        @keyframes text-glitch {
-            0% { text-shadow: 2px 2px var(--accent-blue); }
-            5% { text-shadow: -2px -2px var(--accent-cyan); }
-            10% { text-shadow: 2px -2px #ff00c1; }
-            15% { text-shadow: 0 0 transparent; }
-            100% { text-shadow: 0 0 transparent; }
-        }
-
-        /* Кнопки */
-        .link-item {
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 1rem;
-            margin-bottom: 1rem;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
-            color: #fff;
-            text-decoration: none;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 0.8rem;
-            letter-spacing: 2px;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            overflow: hidden;
-        }
-
-        .link-item:hover {
-            background: rgba(0, 242, 255, 0.1);
-            border-color: var(--accent-cyan);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 242, 255, 0.2);
-            color: var(--accent-cyan);
-        }
-
-        /* Эффект сканирования на кнопках */
-        .link-item::before {
-            content: '';
-            position: absolute;
-            top: -50%; left: -50%;
-            width: 200%; height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.05), transparent);
-            transform: rotate(45deg);
-            transition: 0.5s;
-        }
-        .link-item:hover::before { left: 100%; }
-
-        /* Фоновый холст */
-        #canvas {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: 1;
-            pointer-events: none;
-        }
-
-        /* Статус бар */
-        .status-container {
-            background: rgba(0, 0, 0, 0.4);
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent-color);
             border-radius: 10px;
-            padding: 8px 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 10px;
-            border: 0.5px solid rgba(255,255,255,0.05);
         }
 
-        .dot {
-            width: 6px; height: 6px;
-            background: #00ff88;
-            border-radius: 50%;
-            box-shadow: 0 0 10px #00ff88;
-            margin-right: 8px;
-            animation: pulse 1.5s infinite;
+        /* ========================================
+           ANIMATED BACKGROUND (CANVAS)
+           ========================================
+        */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            filter: blur(1px);
+        }
+
+        /* ========================================
+           LAYOUT & CONTAINERS
+           ========================================
+        */
+        .main-wrapper {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 50px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+            padding: 100px 0;
+        }
+
+        /* ========================================
+           CONTENT SECTION (LEFT)
+           ========================================
+        */
+        .hero-content {
+            flex: 1.2;
+            z-index: 10;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 6px 15px;
+            background: linear-gradient(90deg, var(--secondary-accent), var(--accent-color));
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            animation: fadeInDown 1s ease;
+        }
+
+        .nickname-container {
+            position: relative;
+            margin-bottom: 10px;
+        }
+
+        .main-title {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 900;
+            text-transform: uppercase;
+            line-height: 1;
+            background: linear-gradient(to bottom, #fff, #666);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            position: relative;
+        }
+
+        .old-nick {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--accent-color);
+            font-size: 1.2rem;
+            margin-top: -10px;
+            display: block;
+            opacity: 0.8;
+            text-shadow: var(--neon-shadow);
+        }
+
+        .bio-text {
+            max-width: 600px;
+            font-size: 1.1rem;
+            color: var(--text-dim);
+            margin: 30px 0;
+            position: relative;
+            padding-left: 20px;
+            border-left: 2px solid var(--accent-color);
+        }
+
+        .bio-text strong {
+            color: #fff;
+            text-shadow: 0 0 5px rgba(255,255,255,0.3);
+        }
+
+        /* ========================================
+           SOCIAL BUTTONS
+           ========================================
+        */
+        .social-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 40px;
+        }
+
+        .btn {
+            text-decoration: none;
+            color: #fff;
+            padding: 15px 25px;
+            border-radius: 12px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            font-weight: 600;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            border-color: var(--accent-color);
+            transform: translateY(-5px);
+            box-shadow: var(--neon-shadow);
+            background: rgba(0, 242, 255, 0.05);
+        }
+
+        .btn i {
+            font-size: 1.3rem;
+            color: var(--accent-color);
+        }
+
+        .btn.tg-copy-btn::after {
+            content: 'Скопировано!';
+            position: absolute;
+            top: -100%;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--accent-color);
+            color: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s ease;
+        }
+
+        .btn.tg-copy-btn.active::after {
+            top: 0;
+        }
+
+        /* ========================================
+           3D CANVAS (RIGHT)
+           ========================================
+        */
+        .canvas-container {
+            flex: 0.8;
+            height: 500px;
+            position: relative;
+            cursor: grab;
+        }
+
+        #three-canvas {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* ========================================
+           FEATURES SECTION
+           ========================================
+        */
+        .features {
+            padding: 100px 0;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: var(--glass-bg);
+            padding: 40px;
+            border-radius: 24px;
+            border: 1px solid var(--glass-border);
+            transition: var(--transition);
+        }
+
+        .feature-card:hover {
+            background: rgba(255,255,255,0.06);
+            border-color: var(--secondary-accent);
+            transform: scale(1.02);
+        }
+
+        .feature-card i {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, var(--accent-color), var(--secondary-accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .feature-card h3 {
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* ========================================
+           FOOTER
+           ========================================
+        */
+        footer {
+            text-align: center;
+            padding: 50px;
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        /* ========================================
+           RESPONSIVE DESIGN
+           ========================================
+        */
+        @media (max-width: 1100px) {
+            header {
+                flex-direction: column-reverse;
+                text-align: center;
+                padding: 50px 0;
+            }
+            .bio-text {
+                margin: 30px auto;
+                border-left: none;
+                border-bottom: 2px solid var(--accent-color);
+                padding: 0 0 20px 0;
+            }
+            .canvas-container {
+                width: 100%;
+                height: 350px;
+            }
+            .features {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .main-wrapper {
+                padding: 0 20px;
+            }
+            .social-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ========================================
+           KEYFRAMES
+           ========================================
+        */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         @keyframes pulse {
-            50% { opacity: 0.3; }
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 1; }
         }
 
-        /* Скрываем скроллбар */
-        ::-webkit-scrollbar { display: none; }
+        /* ========================================
+           UTILITY CLASSES
+           ========================================
+        */
+        .glow-text {
+            animation: pulse 3s infinite ease-in-out;
+        }
+
     </style>
 </head>
 <body>
 
-    <canvas id="canvas"></canvas>
+    <canvas id="bg-canvas"></canvas>
 
-    <main class="main-card" id="card">
-        
-        <header class="text-center mb-8">
-            <h1 class="glitch-text text-3xl mb-2">BAKISYYY</h1>
-            <p id="typewriter" class="text-[10px] text-cyan-500 font-mono tracking-[4px] uppercase h-4"></p>
+    <div class="main-wrapper">
+        <header>
+            <div class="hero-content">
+                <span class="badge">Professional Developer & Media</span>
+                
+                <div class="nickname-container">
+                    <h1 class="main-title">Bl0Xa</h1>
+                    <span class="old-nick">// aka bakisyyu</span>
+                </div>
+
+                <div class="bio-text">
+                    Привет! Я <strong>ведущий медиа-блогер по Minecraft Bedrock</strong> и профессиональный <strong>Java-разработчик</strong>. 
+                    Моя специализация — это создание уникального игрового опыта, от сложнейшей настройки серверных плагинов до архитектуры целых проектов. 
+                    Я не просто играю, я <strong>созидаю</strong> цифровые миры, задавая тренды в СНГ-комьюнити.
+                </div>
+
+                <div class="social-grid">
+                    <div class="btn tg-copy-btn" onclick="copyToClipboard('@otxao', this)">
+                        <i class="fab fa-telegram"></i> @otxao
+                    </div>
+                    <a href="https://t.me/BL0Xaoff" target="_blank" class="btn">
+                        <i class="fas fa-bullhorn"></i> Telegram Канал
+                    </a>
+                    <a href="https://www.tiktok.com/@bl0xa_off" target="_blank" class="btn">
+                        <i class="fab fa-tiktok"></i> TikTok
+                    </a>
+                    <a href="https://steamcommunity.com/profiles/76561199581662267/" target="_blank" class="btn">
+                        <i class="fab fa-steam"></i> Steam Profile
+                    </a>
+                </div>
+            </div>
+
+            <div class="canvas-container">
+                <div id="three-canvas"></div>
+            </div>
         </header>
 
-        <div class="status-container mb-8">
-            <div class="flex items-center">
-                <span class="dot"></span>
-                <span class="opacity-70">SYSTEM ONLINE</span>
+        <section class="features">
+            <div class="feature-card">
+                <i class="fas fa-code"></i>
+                <h3>Java Mastery</h3>
+                <p>Разработка кастомных плагинов любой сложности. Оптимизация кода и создание стабильных систем для крупных серверов.</p>
             </div>
-            <div id="timer" class="opacity-50">00:00:00</div>
-        </div>
+            <div class="feature-card">
+                <i class="fas fa-cube"></i>
+                <h3>Bedrock Expert</h3>
+                <p>Глубокое понимание механик Minecraft Bedrock. Создание контента, который собирает охваты и вдохновляет тысячи игроков.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-rocket"></i>
+                <h3>Unique Vision</h3>
+                <p>Мой подход сочетает в себе техническую мощь и креатив. Я создаю то, что другие считают невозможным в рамках движка.</p>
+            </div>
+        </section>
 
-        <div class="flex flex-col">
-            <button onclick="copyDiscord()" class="link-item group">
-                <span class="font-bold">DISCORD</span>
-                <span id="disc-val" class="ml-2 text-[8px] opacity-0 group-hover:opacity-100 transition-opacity text-gray-400">[bakisyyy]</span>
-            </button>
-
-            <a href="https://steamcommunity.com/profiles/76561199581662267/" target="_blank" class="link-item">
-                <span class="font-bold">STEAM PROFILE</span>
-            </a>
-
-            <a href="https://www.tiktok.com/@bl0xa_off" target="_blank" class="link-item">
-                <span class="font-bold">TIKTOK</span>
-            </a>
-
-            <a href="https://t.me/BL0Xaoff" target="_blank" class="link-item">
-                <span class="font-bold">TELEGRAM CHANNEL</span>
-            </a>
-
-            <a href="https://t.me/otxao" target="_blank" class="link-item" style="border-color: rgba(0, 242, 255, 0.4); background: rgba(0, 242, 255, 0.05);">
-                <span class="font-bold text-cyan-400">CONTACT @OTXAO</span>
-            </a>
-        </div>
-
-        <footer class="mt-10 text-center">
-            <p class="text-[8px] tracking-[5px] text-white/20 uppercase">Encoded by Bakisyyy // 2026</p>
+        <footer>
+            <p>&copy; 2026 BL0Xa Design. Built with passion for the GitHub Community.</p>
         </footer>
-    </main>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 
     <script>
-        /**
-         * 1. СИСТЕМА ЧАСТИЦ-ШЛЕЙФА ЗА МЫШЬЮ
-         */
-        const canvas = document.getElementById('canvas');
+        /* ========================================
+           PARTICLE BACKGROUND SYSTEM
+           ========================================
+        */
+        const canvas = document.getElementById('bg-canvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
 
-        window.addEventListener('resize', () => {
+        function resize() {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
-        });
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+        }
 
-        const mouse = { x: undefined, y: undefined };
-
-        window.addEventListener('mousemove', (e) => {
-            mouse.x = e.x;
-            mouse.y = e.y;
-            // При движении создаем 2 новые частицы
-            for(let i = 0; i < 2; i++) {
-                particles.push(new Particle());
-            }
-        });
+        window.addEventListener('resize', resize);
+        resize();
 
         class Particle {
             constructor() {
-                this.x = mouse.x;
-                this.y = mouse.y;
-                this.size = Math.random() * 3 + 1;
-                this.speedX = (Math.random() - 0.5) * 2;
-                this.speedY = (Math.random() - 0.5) * 2;
-                this.color = `rgba(0, 242, 255, ${Math.random()})`;
-                this.life = 1; // "Здоровье" частицы
+                this.reset();
+            }
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 0.5;
+                this.speedX = (Math.random() - 0.5) * 0.5;
+                this.speedY = (Math.random() - 0.5) * 0.5;
+                this.life = Math.random() * 0.5 + 0.2;
             }
             update() {
                 this.x += this.speedX;
                 this.y += this.speedY;
-                this.life -= 0.015; // Постепенно исчезает
-                if (this.size > 0.1) this.size -= 0.05;
+                if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
             }
             draw() {
-                ctx.fillStyle = this.color;
+                ctx.fillStyle = `rgba(0, 242, 255, ${this.life})`;
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
                 ctx.fill();
             }
         }
 
-        function handleParticles() {
-            for (let i = 0; i < particles.length; i++) {
-                particles[i].update();
-                particles[i].draw();
-                if (particles[i].life <= 0) {
-                    particles.splice(i, 1);
-                    i--;
-                }
+        for (let i = 0; i < 100; i++) {
+            particles.push(new Particle());
+        }
+
+        function animateBg() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animateBg);
+        }
+        animateBg();
+
+        /* ========================================
+           THREE.JS 3D CUBE SYSTEM
+           ========================================
+        */
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        const container = document.getElementById('three-canvas');
+        
+        const w = container.clientWidth;
+        const h = container.clientHeight;
+        renderer.setSize(w, h);
+        container.appendChild(renderer.domElement);
+
+        // Создание текстуры с текстом для сторон куба
+        function createTextTexture(text) {
+            const canvas = document.createElement('canvas');
+            canvas.width = 512;
+            canvas.height = 512;
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = '#050505';
+            ctx.fillRect(0, 0, 512, 512);
+            ctx.strokeStyle = '#00f2ff';
+            ctx.lineWidth = 20;
+            ctx.strokeRect(0, 0, 512, 512);
+            ctx.fillStyle = '#00f2ff';
+            ctx.font = 'bold 100px Montserrat';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.shadowBlur = 20;
+            ctx.shadowColor = '#00f2ff';
+            ctx.fillText(text, 256, 256);
+            return new THREE.CanvasTexture(canvas);
+        }
+
+        const texture = createTextTexture('BL0Xa');
+        const geometry = new THREE.BoxGeometry(3, 3, 3);
+        const materials = Array(6).fill(new THREE.MeshBasicMaterial({ map: texture }));
+        const cube = new THREE.Mesh(geometry, materials);
+        
+        scene.add(cube);
+        camera.position.z = 6;
+
+        // Эффекты при наведении
+        let isHovered = false;
+        container.addEventListener('mouseenter', () => isHovered = true);
+        container.addEventListener('mouseleave', () => isHovered = false);
+
+        function animateCube() {
+            requestAnimationFrame(animateCube);
+            
+            if (!isHovered) {
+                cube.rotation.x += 0.01;
+                cube.rotation.y += 0.01;
+                cube.scale.set(1, 1, 1);
+            } else {
+                cube.rotation.x += 0.05;
+                cube.rotation.y += 0.05;
+                const s = 1.2 + Math.sin(Date.now() * 0.01) * 0.1;
+                cube.scale.set(s, s, s);
             }
+            
+            renderer.render(scene, camera);
         }
+        animateCube();
 
-        // Фоновая сетка для красоты
-        function drawGrid() {
-            ctx.strokeStyle = 'rgba(0, 242, 255, 0.03)';
-            ctx.lineWidth = 1;
-            const step = 50;
-            for (let x = 0; x < canvas.width; x += step) {
-                ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height);
-            }
-            for (let y = 0; y < canvas.height; y += step) {
-                ctx.moveTo(0, y); ctx.lineTo(canvas.width, y);
-            }
-            ctx.stroke();
-        }
-
-        function animate() {
-            ctx.fillStyle = 'rgba(2, 2, 2, 0.15)'; // Хвост за частицами
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            drawGrid();
-            handleParticles();
-            requestAnimationFrame(animate);
-        }
-        animate();
-
-        /**
-         * 2. ЭФФЕКТ ПЕЧАТИ
-         */
-        const text = "Visual Architect / UI Enthusiast";
-        let idx = 0;
-        function type() {
-            if(idx < text.length) {
-                document.getElementById('typewriter').innerHTML += text.charAt(idx);
-                idx++;
-                setTimeout(type, 100);
-            }
-        }
-        setTimeout(type, 1000);
-
-        /**
-         * 3. ЧАСЫ
-         */
-        setInterval(() => {
-            const now = new Date();
-            document.getElementById('timer').innerText = now.toLocaleTimeString();
-        }, 1000);
-
-        /**
-         * 4. КОПИРОВАНИЕ
-         */
-        function copyDiscord() {
-            navigator.clipboard.writeText("bakisyyy");
-            const btn = document.getElementById('disc-val');
-            btn.innerText = "[СКОПИРОВАНО]";
-            btn.style.color = "#00ff88";
-            setTimeout(() => {
-                btn.innerText = "[bakisyyy]";
-                btn.style.color = "";
-            }, 2000);
-        }
-
-        /**
-         * 5. ПАРАЛЛАКС КАРТОЧКИ
-         */
-        const card = document.getElementById('card');
-        window.addEventListener('mousemove', (e) => {
-            let x = (window.innerWidth / 2 - e.pageX) / 30;
-            let y = (window.innerHeight / 2 - e.pageY) / 30;
-            card.style.transform = `rotateX(${y}deg) rotateY(${-x}deg)`;
+        // Ресайз 3D сцены
+        window.addEventListener('resize', () => {
+            const w = container.clientWidth;
+            const h = container.clientHeight;
+            camera.aspect = w / h;
+            camera.updateProjectionMatrix();
+            renderer.setSize(w, h);
         });
+
+        /* ========================================
+           UTILITIES (COPY TO CLIPBOARD)
+           ========================================
+        */
+        function copyToClipboard(text, element) {
+            navigator.clipboard.writeText(text).then(() => {
+                element.classList.add('active');
+                setTimeout(() => {
+                    element.classList.remove('active');
+                }, 2000);
+            });
+        }
+
+        // GSAP Плавное появление контента
+        window.addEventListener('DOMContentLoaded', () => {
+            gsap.from(".main-title", { duration: 1.5, y: 50, opacity: 0, ease: "power4.out" });
+            gsap.from(".bio-text", { duration: 1.5, x: -50, opacity: 0, delay: 0.3, ease: "power4.out" });
+            gsap.from(".btn", { duration: 1, y: 20, opacity: 0, stagger: 0.2, delay: 0.5 });
+            gsap.from(".feature-card", { 
+                scrollTrigger: ".features", 
+                duration: 1, 
+                y: 50, 
+                opacity: 0, 
+                stagger: 0.3 
+            });
+        });
+
+        /*
+           ИНСТРУКЦИЯ ДЛЯ GITHUB:
+           1. Создай репозиторий с названием твоя-страница.github.io
+           2. Назови этот файл index.html
+           3. Закинь его в корень репозитория
+           4. Твой сайт будет доступен по этой ссылке!
+        */
     </script>
 </body>
 </html>
