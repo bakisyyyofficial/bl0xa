@@ -9,28 +9,25 @@
 
 <style>
 
-/* ================= ROOT ================= */
+/* ===== ROOT ===== */
 :root{
 --main:#8b5cf6;
 --bg:#050505;
---text:#ffffff;
+--text:#fff;
 --card:rgba(255,255,255,0.05);
 }
 
-/* ================= RESET ================= */
 *{margin:0;padding:0;box-sizing:border-box;}
 
-/* ================= BODY ================= */
 body{
 font-family:'Orbitron',sans-serif;
 background:var(--bg);
 color:var(--text);
 overflow-x:hidden;
-transition:0.4s;
 }
 
-/* ================= BG CANVAS ================= */
-#bg{
+/* ===== CANVAS ===== */
+#rain{
 position:fixed;
 top:0;
 left:0;
@@ -39,23 +36,19 @@ height:100%;
 z-index:-1;
 }
 
-/* ================= HEADER ================= */
+/* ===== HEADER ===== */
 header{
 min-height:100vh;
 display:flex;
-justify-content:space-between;
+flex-direction:column;
+justify-content:center;
 align-items:center;
-padding:40px;
-gap:40px;
-}
-
-/* ================= LEFT ================= */
-.left{
-max-width:520px;
+text-align:center;
+padding:20px;
 }
 
 h1{
-font-size:48px;
+font-size:50px;
 background:linear-gradient(90deg,var(--main),#fff);
 -webkit-background-clip:text;
 color:transparent;
@@ -63,11 +56,12 @@ color:transparent;
 
 p{
 margin-top:20px;
-line-height:1.6;
+max-width:600px;
 color:#ccc;
+line-height:1.6;
 }
 
-/* ================= BUTTONS ================= */
+/* ===== BUTTONS ===== */
 .socials{
 margin-top:20px;
 }
@@ -78,11 +72,11 @@ margin:8px;
 padding:10px 16px;
 border-radius:10px;
 border:1px solid var(--main);
-cursor:pointer;
 text-decoration:none;
 color:var(--text);
 background:var(--card);
 transition:0.3s;
+cursor:pointer;
 }
 
 .btn:hover{
@@ -91,7 +85,7 @@ background:var(--main);
 box-shadow:0 0 20px var(--main);
 }
 
-/* ================= PANEL ================= */
+/* ===== PANEL ===== */
 .panel{
 position:fixed;
 top:10px;
@@ -99,33 +93,24 @@ right:10px;
 z-index:10;
 }
 
-/* ================= CUBE ================= */
-#cube{
-width:320px;
-height:320px;
-}
-
-/* ================= FOOTER ================= */
-footer{
-text-align:center;
-padding:30px;
-color:#777;
-}
-
-/* ================= MOBILE ================= */
-@media(max-width:900px){
-header{
-flex-direction:column;
+/* ===== ABOUT ===== */
+section{
+padding:80px 20px;
 text-align:center;
 }
-#cube{
-margin-top:30px;
-width:260px;
-height:260px;
-}
+
+.about{
+max-width:700px;
+margin:auto;
+font-size:18px;
 }
 
-/* ================= EXTRA LINES ================= */
+/* ===== MOBILE ===== */
+@media(max-width:700px){
+h1{font-size:36px;}
+}
+
+/* ===== EXTRA LINES ===== */
 /* 1 */
 /* 2 */
 /* 3 */
@@ -146,6 +131,160 @@ height:260px;
 /* 18 */
 /* 19 */
 /* 20 */
+
+</style>
+</head>
+
+<body>
+
+<canvas id="rain"></canvas>
+
+<div class="panel">
+<div class="btn" onclick="toggleTheme()">Theme</div>
+<div class="btn" onclick="toggleLang()">RU/EN</div>
+</div>
+
+<header>
+
+<h1>BL0Xa</h1>
+
+<p id="desc">
+Я медиа-блогер по Minecraft Bedrock и Java разработчик.
+Настройка серверов и плагинов — моя зона.
+</p>
+
+<div class="socials">
+<div class="btn" onclick="copyTG()">Telegram ЛС: @otxao</div>
+<a class="btn" href="https://t.me/BL0Xaoff" target="_blank">Telegram канал</a>
+<a class="btn" href="https://www.tiktok.com/@bl0xa_off" target="_blank">TikTok</a>
+<a class="btn" href="https://steamcommunity.com/profiles/76561199581662267/" target="_blank">Steam</a>
+</div>
+
+</header>
+
+<section>
+
+<h2>Обо мне</h2>
+
+<p class="about">
+Я не просто делаю контент — я понимаю систему изнутри.  
+Minecraft для меня — это не игра, а платформа, где можно строить,
+оптимизировать и создавать реально работающие проекты.
+<br><br>
+Я пишу на Java, настраиваю сервера и делаю вещи, которые
+выглядят и работают лучше, чем у большинства.
+<br><br>
+Если тебе нужен не “ещё один”, а реально сильный человек — ты уже его нашёл.
+</p>
+
+</section>
+
+<footer>© BL0Xa</footer>
+
+<script>
+
+/* ===== COPY ===== */
+function copyTG(){
+navigator.clipboard.writeText("@otxao");
+alert("Скопировано");
+}
+
+/* ===== LANG ===== */
+let lang="ru";
+
+function toggleLang(){
+lang=lang==="ru"?"en":"ru";
+
+if(lang==="en"){
+desc.innerText="Minecraft Bedrock media creator & Java developer.";
+}else{
+desc.innerText="Я медиа-блогер по Minecraft Bedrock и Java разработчик.";
+}
+}
+
+/* ===== THEME ===== */
+let dark=true;
+
+function toggleTheme(){
+if(dark){
+document.documentElement.style.setProperty('--bg','#fff');
+document.documentElement.style.setProperty('--text','#000');
+}else{
+document.documentElement.style.setProperty('--bg','#050505');
+document.documentElement.style.setProperty('--text','#fff');
+}
+dark=!dark;
+}
+
+/* ===== NEON RAIN ===== */
+const canvas=document.getElementById("rain");
+const ctx=canvas.getContext("2d");
+
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+let rods=[];
+
+for(let i=0;i<120;i++){
+rods.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+len:Math.random()*40+10,
+speed:Math.random()*2+1,
+z:Math.random()*1
+});
+}
+
+let mouseX=0,mouseY=0;
+
+document.addEventListener("mousemove",(e)=>{
+mouseX=e.clientX;
+mouseY=e.clientY;
+});
+
+function draw(){
+ctx.clearRect(0,0,canvas.width,canvas.height);
+
+rods.forEach(r=>{
+
+let dx = mouseX - r.x;
+let dy = mouseY - r.y;
+let dist = Math.sqrt(dx*dx+dy*dy);
+
+if(dist<150){
+r.z = Math.min(2, r.z + 0.05);
+}else{
+r.z = Math.max(1, r.z - 0.02);
+}
+
+r.y += r.speed * r.z;
+
+if(r.y > canvas.height){
+r.y = -20;
+r.x = Math.random()*canvas.width;
+}
+
+ctx.strokeStyle = "rgba(139,92,246,"+ (0.5*r.z) +")";
+ctx.lineWidth = 2 * r.z;
+
+ctx.beginPath();
+ctx.moveTo(r.x, r.y);
+ctx.lineTo(r.x, r.y + r.len * r.z);
+ctx.stroke();
+
+});
+
+requestAnimationFrame(draw);
+}
+
+draw();
+
+window.addEventListener("resize",()=>{
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+});
+
+/* EXTRA */
 /* 21 */
 /* 22 */
 /* 23 */
@@ -156,233 +295,6 @@ height:260px;
 /* 28 */
 /* 29 */
 /* 30 */
-
-</style>
-</head>
-
-<body>
-
-<canvas id="bg"></canvas>
-
-<div class="panel">
-<div class="btn" onclick="toggleTheme()">Theme</div>
-<div class="btn" onclick="toggleLang()">RU/EN</div>
-</div>
-
-<header>
-
-<div class="left">
-
-<h1 id="title">BL0Xa</h1>
-
-<p id="desc">
-Я медиа-блогер по Minecraft Bedrock и Java разработчик.
-Настройка серверов и плагинов — моя зона.
-</p>
-
-<div class="socials">
-
-<div class="btn" onclick="copyTG()">Telegram ЛС: @otxao</div>
-
-<a class="btn" href="https://t.me/BL0Xaoff" target="_blank">Telegram канал</a>
-
-<a class="btn" href="https://www.tiktok.com/@bl0xa_off" target="_blank">TikTok</a>
-
-<a class="btn" href="https://steamcommunity.com/profiles/76561199581662267/" target="_blank">Steam</a>
-
-</div>
-
-</div>
-
-<div id="cube"></div>
-
-</header>
-
-<footer>© BL0Xa</footer>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-
-<script>
-
-/* ================= LANGUAGE ================= */
-let lang="ru";
-
-function toggleLang(){
-lang = lang==="ru" ? "en" : "ru";
-
-if(lang==="ru"){
-desc.innerText="Я медиа-блогер по Minecraft Bedrock и Java разработчик. Настройка серверов и плагинов — моя зона.";
-}else{
-desc.innerText="Minecraft Bedrock media creator & Java developer. Servers and plugins are my field.";
-}
-}
-
-/* ================= THEME ================= */
-let dark=true;
-
-function toggleTheme(){
-if(dark){
-document.documentElement.style.setProperty('--bg','#ffffff');
-document.documentElement.style.setProperty('--text','#000');
-document.documentElement.style.setProperty('--main','#7c3aed');
-}else{
-document.documentElement.style.setProperty('--bg','#050505');
-document.documentElement.style.setProperty('--text','#fff');
-document.documentElement.style.setProperty('--main','#8b5cf6');
-}
-dark=!dark;
-}
-
-/* ================= COPY ================= */
-function copyTG(){
-navigator.clipboard.writeText("@otxao");
-alert("Скопировано");
-}
-
-/* ================= BACKGROUND ================= */
-const bg = document.getElementById("bg");
-const ctx = bg.getContext("2d");
-
-bg.width = window.innerWidth;
-bg.height = window.innerHeight;
-
-let particles=[];
-
-for(let i=0;i<120;i++){
-particles.push({
-x:Math.random()*bg.width,
-y:Math.random()*bg.height,
-size:Math.random()*4+1,
-speedY:Math.random()*1+0.2,
-speedX:Math.random()*0.5-0.25,
-type:Math.random()>0.5?"snow":"leaf"
-});
-}
-
-function draw(){
-ctx.clearRect(0,0,bg.width,bg.height);
-
-particles.forEach(p=>{
-p.x+=p.speedX;
-p.y+=p.speedY;
-
-if(p.y>bg.height){
-p.y=-10;
-p.x=Math.random()*bg.width;
-}
-
-if(p.type==="snow"){
-ctx.fillStyle="white";
-ctx.beginPath();
-ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
-ctx.fill();
-}else{
-ctx.fillStyle="#8b5cf6";
-ctx.fillRect(p.x,p.y,p.size,p.size*2);
-}
-});
-
-requestAnimationFrame(draw);
-}
-
-draw();
-
-/* ================= THREE CUBE ================= */
-
-const scene=new THREE.Scene();
-const camera=new THREE.PerspectiveCamera(75,1,0.1,1000);
-
-const renderer=new THREE.WebGLRenderer({alpha:true,antialias:true});
-renderer.setSize(320,320);
-cube.appendChild(renderer.domElement);
-
-const geo=new THREE.BoxGeometry();
-
-const mat=new THREE.MeshStandardMaterial({
-color:0x8b5cf6,
-metalness:0.7,
-roughness:0.2,
-emissive:0x220044
-});
-
-const cubeMesh=new THREE.Mesh(geo,mat);
-scene.add(cubeMesh);
-
-const light=new THREE.PointLight(0xffffff,1);
-light.position.set(5,5,5);
-scene.add(light);
-
-camera.position.z=3;
-
-let mx=0,my=0;
-
-document.addEventListener("mousemove",(e)=>{
-mx=(e.clientX/window.innerWidth)-0.5;
-my=(e.clientY/window.innerHeight)-0.5;
-});
-
-let speed=0.01;
-
-function animate(){
-requestAnimationFrame(animate);
-
-cubeMesh.rotation.x += (my*2 - cubeMesh.rotation.x)*0.05;
-cubeMesh.rotation.y += speed + (mx*2 - cubeMesh.rotation.y)*0.05;
-
-renderer.render(scene,camera);
-}
-
-animate();
-
-/* HOVER */
-
-renderer.domElement.addEventListener("mouseenter",()=>{
-mat.emissive.setHex(0xff00aa);
-});
-
-renderer.domElement.addEventListener("mouseleave",()=>{
-mat.emissive.setHex(0x220044);
-});
-
-/* DOUBLE CLICK */
-
-renderer.domElement.addEventListener("dblclick",()=>{
-speed=0.2;
-setTimeout(()=>speed=0.01,1500);
-});
-
-/* KONAMI */
-
-let keys=[];
-const code="ArrowUpArrowUpArrowDownArrowDownArrowLeftArrowRightArrowLeftArrowRightba";
-
-document.addEventListener("keydown",(e)=>{
-keys.push(e.key);
-keys.splice(-code.length-1,keys.length-code.length);
-
-if(keys.join("").includes(code)){
-document.body.style.filter="hue-rotate(180deg)";
-alert("PRO MODE");
-}
-});
-
-/* RESIZE */
-window.addEventListener("resize",()=>{
-bg.width=window.innerWidth;
-bg.height=window.innerHeight;
-});
-
-/* EXTRA */
-/* 31 */
-/* 32 */
-/* 33 */
-/* 34 */
-/* 35 */
-/* 36 */
-/* 37 */
-/* 38 */
-/* 39 */
-/* 40 */
 
 </script>
 
