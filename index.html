@@ -3,70 +3,55 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BL0Xa</title>
-
+<title>BL0Xa Portfolio</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
-
 <style>
-
-/* ===== BASE ===== */
-
 :root{
---bg:#0a0a0a;
+--bg:#0d0d0d;
 --glass:rgba(255,255,255,0.05);
 --border:rgba(255,255,255,0.1);
 --text:#eaeaea;
 --muted:#9a9a9a;
+--accent:#ffffff;
 }
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
-
+*{margin:0;padding:0;box-sizing:border-box;}
 body{
 font-family:'Inter',sans-serif;
-background:linear-gradient(120deg,#0a0a0a,#111);
+background:linear-gradient(135deg,#0d0d0d,#1a1a1a);
 color:var(--text);
 overflow-x:hidden;
+scroll-behavior:smooth;
 }
 
-/* ===== GLASS BACKGROUND ===== */
-
+/* BACKGROUND */
 .background{
 position:fixed;
-width:100%;
-height:100%;
 top:0;
 left:0;
+width:100%;
+height:100%;
+backdrop-filter:blur(50px);
 z-index:-2;
-backdrop-filter:blur(40px);
 }
-
-/* ===== SIDE DECOR ===== */
-
 .side{
 position:fixed;
 top:0;
 height:100%;
-width:120px;
+width:100px;
 z-index:-1;
 pointer-events:none;
 }
-
 .side.left{
 left:0;
 background:linear-gradient(to right,rgba(255,255,255,0.05),transparent);
 }
-
 .side.right{
 right:0;
 background:linear-gradient(to left,rgba(255,255,255,0.05),transparent);
 }
 
-/* ===== HEADER ===== */
-
+/* HEADER */
 header{
 min-height:100vh;
 display:flex;
@@ -76,25 +61,21 @@ align-items:center;
 text-align:center;
 padding:20px;
 }
-
-/* ===== TITLE ===== */
-
 h1{
-font-size:48px;
+font-size:50px;
 letter-spacing:2px;
-margin-bottom:10px;
+background:linear-gradient(90deg,var(--accent),#ccc);
+-webkit-background-clip:text;
+color:transparent;
 }
-
-/* ===== TEXT ===== */
-
 p{
+margin-top:20px;
 max-width:600px;
 line-height:1.6;
 color:var(--muted);
 }
 
-/* ===== CARD ===== */
-
+/* CARD */
 .card{
 margin-top:30px;
 padding:25px;
@@ -104,13 +85,12 @@ border:1px solid var(--border);
 backdrop-filter:blur(20px);
 transition:0.3s;
 }
-
 .card:hover{
 transform:translateY(-5px);
+box-shadow:0 0 20px rgba(255,255,255,0.1);
 }
 
-/* ===== BUTTONS ===== */
-
+/* BUTTONS */
 .btn{
 display:inline-block;
 margin:8px;
@@ -121,13 +101,11 @@ text-decoration:none;
 color:var(--text);
 transition:0.3s;
 }
-
 .btn:hover{
 background:rgba(255,255,255,0.1);
 }
 
-/* ===== PANEL ===== */
-
+/* PANEL */
 .panel{
 position:fixed;
 top:15px;
@@ -136,141 +114,126 @@ display:flex;
 gap:10px;
 }
 
-/* ===== ABOUT ===== */
-
+/* SECTION */
 section{
 padding:80px 20px;
 text-align:center;
 }
-
 .about{
 max-width:700px;
 margin:auto;
 font-size:17px;
+line-height:1.6;
+color:#ccc;
 }
 
-/* ===== CURSOR TRAIL ===== */
-
-.trail{
+/* RAIN ELEMENTS */
+canvas#rain{
 position:fixed;
-width:6px;
-height:6px;
-background:#fff;
-border-radius:50%;
-pointer-events:none;
-opacity:0.5;
-z-index:999;
+top:0;
+left:0;
+width:100%;
+height:100%;
+z-index:-1;
 }
 
-/* ===== MOBILE ===== */
+/* ANIMATION */
+@keyframes fadeIn{
+from{opacity:0;transform:translateY(40px);}
+to{opacity:1;transform:translateY(0);}
+}
+header,section{
+animation:fadeIn 1.5s ease;
+}
 
+/* MOBILE */
 @media(max-width:700px){
-
-h1{
-font-size:34px;
-}
-
-.card{
-padding:20px;
-}
-
+h1{font-size:36px;}
+.card{padding:20px;}
 }
 
 </style>
 </head>
-
 <body>
 
 <div class="background"></div>
 <div class="side left"></div>
 <div class="side right"></div>
-
 <div class="panel">
 <div class="btn" onclick="toggleLang()">RU/EN</div>
 </div>
 
 <header>
-
 <h1>BL0Xa</h1>
-
-<p id="desc">
-Я медиа блогер, развит в монтаже, изучаю Java, имею опыт в создании плагинов и настройке серверов. Многие знают меня как bakisyyy.
-</p>
+<p id="desc">Я медиа блогер, развит в монтаже, изучаю Java, имею опыт в создании плагинов и настройки серверов. Многие знают меня как bakisyyy.</p>
 
 <div class="card">
-
-<a class="btn" href="https://t.me/BL0Xaoff" target="_blank">
-Telegram канал
-</a>
-
-<a class="btn" href="https://www.tiktok.com/@bl0xa_off" target="_blank">
-TikTok
-</a>
-
-<a class="btn" href="https://steamcommunity.com/profiles/76561199581662267/" target="_blank">
-Steam
-</a>
-
+<a class="btn" href="https://t.me/BL0Xaoff" target="_blank">Telegram канал</a>
+<a class="btn" href="https://www.tiktok.com/@bl0xa_off" target="_blank">TikTok</a>
+<a class="btn" href="https://steamcommunity.com/profiles/76561199581662267/" target="_blank">Steam</a>
 </div>
-
 </header>
 
 <section>
-
-<h2>Обо мне</h2>
-
+<div class="card">
 <p class="about">
-Я делаю контент и параллельно развиваюсь в технической части.
-Монтаж, визуал и подача — моя сильная сторона.
-<br><br>
-Сейчас углубляюсь в Java и уже имею опыт создания плагинов
-и настройки серверов.
-<br><br>
-Меня знают как bakisyyy, и я продолжаю развиваться дальше.
+Я создаю контент и развиваюсь в технической части. Монтаж и визуальная подача — мои сильные стороны. <br><br>
+Изучаю Java, пишу плагины и настраиваю сервера. <br><br>
+Многие знают меня как bakisyyy, и я продолжаю развиваться дальше.
 </p>
-
+</div>
 </section>
 
-<footer style="text-align:center;padding:40px;color:#666;">
-© BL0Xa
-</footer>
+<footer style="text-align:center;padding:40px;color:#666;">© BL0Xa</footer>
+
+<canvas id="rain"></canvas>
 
 <script>
-
-/* ===== LANGUAGE ===== */
-
+// LANGUAGE
 let lang="ru";
-
 function toggleLang(){
 lang = lang==="ru" ? "en" : "ru";
-
-if(lang==="en"){
-desc.innerText="Media creator, video editing focused, learning Java, experienced in plugins and server setup. Also known as bakisyyy.";
-}else{
-desc.innerText="Я медиа блогер, развит в монтаже, изучаю Java, имею опыт в создании плагинов и настройке серверов. Многие знают меня как bakisyyy.";
-}
+const desc = document.getElementById("desc");
+desc.innerText = lang==="ru"
+? "Я медиа блогер, развит в монтаже, изучаю Java, имею опыт в создании плагинов и настройки серверов. Многие знают меня как bakisyyy."
+: "Media creator, skilled in editing, learning Java, experienced in plugins and server setup. Known as bakisyyy.";
 }
 
-/* ===== CURSOR TRAIL ===== */
+// NEON RAIN
+const canvas=document.getElementById("rain");
+const ctx=canvas.getContext("2d");
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
 
-let trails=[];
+let rods=[];
+for(let i=0;i<130;i++){
+rods.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,len:Math.random()*30+10,speed:Math.random()*2+0.5,z:1});
+}
 
-document.addEventListener("mousemove",(e)=>{
+document.addEventListener("mousemove",(e)=>{mouse={x:e.clientX,y:e.clientY};});
 
-let t=document.createElement("div");
-t.className="trail";
+let mouse={x:0,y:0};
 
-t.style.left=e.clientX+"px";
-t.style.top=e.clientY+"px";
-
-document.body.appendChild(t);
-
-setTimeout(()=>{
-t.remove();
-},500);
-
+function draw(){
+ctx.clearRect(0,0,canvas.width,canvas.height);
+rods.forEach(r=>{
+let dx=mouse.x-r.x;
+let dy=mouse.y-r.y;
+let dist=Math.sqrt(dx*dx+dy*dy);
+r.z=dist<120?Math.min(2,r.z+0.05):Math.max(1,r.z-0.02);
+r.y+=r.speed*r.z;
+if(r.y>canvas.height){r.y=-20;r.x=Math.random()*canvas.width;}
+ctx.strokeStyle="rgba(255,255,255,"+(0.3*r.z)+")";
+ctx.lineWidth=2*r.z;
+ctx.beginPath();
+ctx.moveTo(r.x,r.y);
+ctx.lineTo(r.x,r.y+r.len*r.z);
+ctx.stroke();
 });
-
+requestAnimationFrame(draw);
+}
+draw();
+window.addEventListener("resize",()=>{canvas.width=window.innerWidth;canvas.height=window.innerHeight;});
 </script>
 
 </body>
