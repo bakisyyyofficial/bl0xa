@@ -14,16 +14,38 @@
 --main:#8b5cf6;
 --bg:#050505;
 --text:#fff;
---card:rgba(255,255,255,0.05);
+--glass:rgba(255,255,255,0.06);
 }
 
-*{margin:0;padding:0;box-sizing:border-box;}
+*{margin:0;padding:0;box-sizing:border-box;cursor:none;}
 
+/* ===== BODY ===== */
 body{
 font-family:'Orbitron',sans-serif;
 background:var(--bg);
 color:var(--text);
 overflow-x:hidden;
+}
+
+/* ===== CUSTOM CURSOR ===== */
+.cursor{
+width:12px;
+height:12px;
+border-radius:50%;
+background:var(--main);
+position:fixed;
+pointer-events:none;
+z-index:999;
+}
+
+.cursor2{
+width:30px;
+height:30px;
+border:1px solid var(--main);
+border-radius:50%;
+position:fixed;
+pointer-events:none;
+z-index:998;
 }
 
 /* ===== CANVAS ===== */
@@ -45,10 +67,11 @@ justify-content:center;
 align-items:center;
 text-align:center;
 padding:20px;
+animation:fadeIn 1.5s ease;
 }
 
 h1{
-font-size:50px;
+font-size:52px;
 background:linear-gradient(90deg,var(--main),#fff);
 -webkit-background-clip:text;
 color:transparent;
@@ -58,14 +81,25 @@ p{
 margin-top:20px;
 max-width:600px;
 color:#ccc;
-line-height:1.6;
+}
+
+/* ===== GLASS CARD ===== */
+.card{
+margin-top:30px;
+padding:25px;
+border-radius:20px;
+background:var(--glass);
+backdrop-filter:blur(15px);
+border:1px solid rgba(255,255,255,0.1);
+transition:0.3s;
+}
+
+.card:hover{
+transform:translateY(-5px);
+box-shadow:0 0 30px rgba(139,92,246,0.4);
 }
 
 /* ===== BUTTONS ===== */
-.socials{
-margin-top:20px;
-}
-
 .btn{
 display:inline-block;
 margin:8px;
@@ -74,13 +108,10 @@ border-radius:10px;
 border:1px solid var(--main);
 text-decoration:none;
 color:var(--text);
-background:var(--card);
 transition:0.3s;
-cursor:pointer;
 }
 
 .btn:hover{
-transform:translateY(-3px) scale(1.05);
 background:var(--main);
 box-shadow:0 0 20px var(--main);
 }
@@ -93,16 +124,16 @@ right:10px;
 z-index:10;
 }
 
-/* ===== ABOUT ===== */
+/* ===== SECTION ===== */
 section{
 padding:80px 20px;
 text-align:center;
 }
 
-.about{
-max-width:700px;
-margin:auto;
-font-size:18px;
+/* ===== ANIMATION ===== */
+@keyframes fadeIn{
+from{opacity:0;transform:translateY(40px);}
+to{opacity:1;transform:translateY(0);}
 }
 
 /* ===== MOBILE ===== */
@@ -121,21 +152,14 @@ h1{font-size:36px;}
 /* 8 */
 /* 9 */
 /* 10 */
-/* 11 */
-/* 12 */
-/* 13 */
-/* 14 */
-/* 15 */
-/* 16 */
-/* 17 */
-/* 18 */
-/* 19 */
-/* 20 */
 
 </style>
 </head>
 
 <body>
+
+<div class="cursor"></div>
+<div class="cursor2"></div>
 
 <canvas id="rain"></canvas>
 
@@ -150,38 +174,47 @@ h1{font-size:36px;}
 
 <p id="desc">
 Я медиа-блогер по Minecraft Bedrock и Java разработчик.
-Настройка серверов и плагинов — моя зона.
 </p>
 
-<div class="socials">
-<div class="btn" onclick="copyTG()">Telegram ЛС: @otxao</div>
-<a class="btn" href="https://t.me/BL0Xaoff" target="_blank">Telegram канал</a>
-<a class="btn" href="https://www.tiktok.com/@bl0xa_off" target="_blank">TikTok</a>
-<a class="btn" href="https://steamcommunity.com/profiles/76561199581662267/" target="_blank">Steam</a>
+<div class="card">
+
+<div class="btn" onclick="copyTG()">Telegram ЛС</div>
+<a class="btn" href="https://t.me/BL0Xaoff">Telegram</a>
+<a class="btn" href="https://www.tiktok.com/@bl0xa_off">TikTok</a>
+<a class="btn" href="https://steamcommunity.com/profiles/76561199581662267/">Steam</a>
+
 </div>
 
 </header>
 
 <section>
 
-<h2>Обо мне</h2>
-
-<p class="about">
-Я не просто делаю контент — я понимаю систему изнутри.  
-Minecraft для меня — это не игра, а платформа, где можно строить,
-оптимизировать и создавать реально работающие проекты.
+<div class="card">
+Я не просто делаю контент.  
+Я строю системы, пишу код и делаю проекты, которые реально работают.  
 <br><br>
-Я пишу на Java, настраиваю сервера и делаю вещи, которые
-выглядят и работают лучше, чем у большинства.
-<br><br>
-Если тебе нужен не “ещё один”, а реально сильный человек — ты уже его нашёл.
-</p>
+Если нужен уровень — ты его уже нашёл.
+</div>
 
 </section>
 
-<footer>© BL0Xa</footer>
+<footer style="text-align:center;padding:30px;color:#777;">© BL0Xa</footer>
 
 <script>
+
+/* ===== CURSOR ===== */
+const c=document.querySelector(".cursor");
+const c2=document.querySelector(".cursor2");
+
+document.addEventListener("mousemove",(e)=>{
+c.style.left=e.clientX+"px";
+c.style.top=e.clientY+"px";
+
+setTimeout(()=>{
+c2.style.left=e.clientX+"px";
+c2.style.top=e.clientY+"px";
+},80);
+});
 
 /* ===== COPY ===== */
 function copyTG(){
@@ -191,20 +224,15 @@ alert("Скопировано");
 
 /* ===== LANG ===== */
 let lang="ru";
-
 function toggleLang(){
 lang=lang==="ru"?"en":"ru";
-
-if(lang==="en"){
-desc.innerText="Minecraft Bedrock media creator & Java developer.";
-}else{
-desc.innerText="Я медиа-блогер по Minecraft Bedrock и Java разработчик.";
-}
+desc.innerText = lang==="ru"
+? "Я медиа-блогер по Minecraft Bedrock и Java разработчик."
+: "Minecraft Bedrock media creator & Java developer.";
 }
 
 /* ===== THEME ===== */
 let dark=true;
-
 function toggleTheme(){
 if(dark){
 document.documentElement.style.setProperty('--bg','#fff');
@@ -225,21 +253,20 @@ canvas.height=window.innerHeight;
 
 let rods=[];
 
-for(let i=0;i<120;i++){
+for(let i=0;i<140;i++){
 rods.push({
 x:Math.random()*canvas.width,
 y:Math.random()*canvas.height,
 len:Math.random()*40+10,
 speed:Math.random()*2+1,
-z:Math.random()*1
+z:1
 });
 }
 
-let mouseX=0,mouseY=0;
-
+let mx=0,my=0;
 document.addEventListener("mousemove",(e)=>{
-mouseX=e.clientX;
-mouseY=e.clientY;
+mx=e.clientX;
+my=e.clientY;
 });
 
 function draw(){
@@ -247,29 +274,29 @@ ctx.clearRect(0,0,canvas.width,canvas.height);
 
 rods.forEach(r=>{
 
-let dx = mouseX - r.x;
-let dy = mouseY - r.y;
-let dist = Math.sqrt(dx*dx+dy*dy);
+let dx=mx-r.x;
+let dy=my-r.y;
+let dist=Math.sqrt(dx*dx+dy*dy);
 
 if(dist<150){
-r.z = Math.min(2, r.z + 0.05);
+r.z=Math.min(2,r.z+0.05);
 }else{
-r.z = Math.max(1, r.z - 0.02);
+r.z=Math.max(1,r.z-0.02);
 }
 
-r.y += r.speed * r.z;
+r.y+=r.speed*r.z;
 
-if(r.y > canvas.height){
-r.y = -20;
-r.x = Math.random()*canvas.width;
+if(r.y>canvas.height){
+r.y=-20;
+r.x=Math.random()*canvas.width;
 }
 
-ctx.strokeStyle = "rgba(139,92,246,"+ (0.5*r.z) +")";
-ctx.lineWidth = 2 * r.z;
+ctx.strokeStyle="rgba(139,92,246,"+(0.5*r.z)+")";
+ctx.lineWidth=2*r.z;
 
 ctx.beginPath();
-ctx.moveTo(r.x, r.y);
-ctx.lineTo(r.x, r.y + r.len * r.z);
+ctx.moveTo(r.x,r.y);
+ctx.lineTo(r.x,r.y+r.len*r.z);
 ctx.stroke();
 
 });
@@ -285,16 +312,11 @@ canvas.height=window.innerHeight;
 });
 
 /* EXTRA */
-/* 21 */
-/* 22 */
-/* 23 */
-/* 24 */
-/* 25 */
-/* 26 */
-/* 27 */
-/* 28 */
-/* 29 */
-/* 30 */
+/* 11 */
+/* 12 */
+/* 13 */
+/* 14 */
+/* 15 */
 
 </script>
 
