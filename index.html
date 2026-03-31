@@ -3,45 +3,59 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BL0Xa V3</title>
+<title>BL0Xa</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 
 <style>
 
 /* ================= ROOT ================= */
-
 :root{
---main:#7c3aed;
+--main:#8b5cf6;
 --bg:#050505;
 --text:#ffffff;
+--card:rgba(255,255,255,0.05);
 }
 
-/* ================= BASE ================= */
-
+/* ================= RESET ================= */
 *{margin:0;padding:0;box-sizing:border-box;}
 
+/* ================= BODY ================= */
 body{
 font-family:'Orbitron',sans-serif;
 background:var(--bg);
 color:var(--text);
+overflow-x:hidden;
 transition:0.4s;
 }
 
-/* ================= HEADER ================= */
+/* ================= BG CANVAS ================= */
+#bg{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+z-index:-1;
+}
 
+/* ================= HEADER ================= */
 header{
+min-height:100vh;
 display:flex;
 justify-content:space-between;
 align-items:center;
 padding:40px;
-min-height:100vh;
+gap:40px;
 }
 
-/* ================= TEXT ================= */
+/* ================= LEFT ================= */
+.left{
+max-width:520px;
+}
 
 h1{
-font-size:50px;
+font-size:48px;
 background:linear-gradient(90deg,var(--main),#fff);
 -webkit-background-clip:text;
 color:transparent;
@@ -49,35 +63,35 @@ color:transparent;
 
 p{
 margin-top:20px;
-max-width:500px;
+line-height:1.6;
 color:#ccc;
 }
 
 /* ================= BUTTONS ================= */
+.socials{
+margin-top:20px;
+}
 
 .btn{
 display:inline-block;
-margin:10px;
-padding:10px 15px;
-border:1px solid var(--main);
+margin:8px;
+padding:10px 16px;
 border-radius:10px;
+border:1px solid var(--main);
 cursor:pointer;
+text-decoration:none;
+color:var(--text);
+background:var(--card);
 transition:0.3s;
 }
 
 .btn:hover{
+transform:translateY(-3px) scale(1.05);
 background:var(--main);
+box-shadow:0 0 20px var(--main);
 }
 
-/* ================= RIGHT ================= */
-
-#cube{
-width:350px;
-height:350px;
-}
-
-/* ================= TOP PANEL ================= */
-
+/* ================= PANEL ================= */
 .panel{
 position:fixed;
 top:10px;
@@ -85,11 +99,30 @@ right:10px;
 z-index:10;
 }
 
-/* ================= MOBILE ================= */
+/* ================= CUBE ================= */
+#cube{
+width:320px;
+height:320px;
+}
 
+/* ================= FOOTER ================= */
+footer{
+text-align:center;
+padding:30px;
+color:#777;
+}
+
+/* ================= MOBILE ================= */
 @media(max-width:900px){
-header{flex-direction:column;text-align:center;}
-#cube{margin-top:40px;}
+header{
+flex-direction:column;
+text-align:center;
+}
+#cube{
+margin-top:30px;
+width:260px;
+height:260px;
+}
 }
 
 /* ================= EXTRA LINES ================= */
@@ -129,6 +162,8 @@ header{flex-direction:column;text-align:center;}
 
 <body>
 
+<canvas id="bg"></canvas>
+
 <div class="panel">
 <div class="btn" onclick="toggleTheme()">Theme</div>
 <div class="btn" onclick="toggleLang()">RU/EN</div>
@@ -136,91 +171,148 @@ header{flex-direction:column;text-align:center;}
 
 <header>
 
-<div>
+<div class="left">
+
 <h1 id="title">BL0Xa</h1>
+
 <p id="desc">
 Я медиа-блогер по Minecraft Bedrock и Java разработчик.
 Настройка серверов и плагинов — моя зона.
 </p>
 
-<div class="btn" onclick="copyTG()">Telegram</div>
+<div class="socials">
+
+<div class="btn" onclick="copyTG()">Telegram ЛС: @otxao</div>
+
+<a class="btn" href="https://t.me/BL0Xaoff" target="_blank">Telegram канал</a>
+
+<a class="btn" href="https://www.tiktok.com/@bl0xa_off" target="_blank">TikTok</a>
+
+<a class="btn" href="https://steamcommunity.com/profiles/76561199581662267/" target="_blank">Steam</a>
+
+</div>
+
 </div>
 
 <div id="cube"></div>
 
 </header>
 
+<footer>© BL0Xa</footer>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
 <script>
 
 /* ================= LANGUAGE ================= */
-
-let lang = "ru";
+let lang="ru";
 
 function toggleLang(){
-lang = lang === "ru" ? "en" : "ru";
+lang = lang==="ru" ? "en" : "ru";
 
 if(lang==="ru"){
-title.innerText="BL0Xa";
-desc.innerText="Я медиа-блогер по Minecraft Bedrock и Java разработчик.";
+desc.innerText="Я медиа-блогер по Minecraft Bedrock и Java разработчик. Настройка серверов и плагинов — моя зона.";
 }else{
-title.innerText="BL0Xa";
-desc.innerText="Minecraft Bedrock media creator & Java developer.";
+desc.innerText="Minecraft Bedrock media creator & Java developer. Servers and plugins are my field.";
 }
 }
 
 /* ================= THEME ================= */
-
-let dark = true;
+let dark=true;
 
 function toggleTheme(){
 if(dark){
-document.documentElement.style.setProperty('--main','#00f0ff');
 document.documentElement.style.setProperty('--bg','#ffffff');
 document.documentElement.style.setProperty('--text','#000');
-}else{
 document.documentElement.style.setProperty('--main','#7c3aed');
+}else{
 document.documentElement.style.setProperty('--bg','#050505');
 document.documentElement.style.setProperty('--text','#fff');
+document.documentElement.style.setProperty('--main','#8b5cf6');
 }
-dark = !dark;
+dark=!dark;
 }
 
 /* ================= COPY ================= */
-
 function copyTG(){
 navigator.clipboard.writeText("@otxao");
-alert("copied");
+alert("Скопировано");
 }
 
-/* ================= THREE ================= */
+/* ================= BACKGROUND ================= */
+const bg = document.getElementById("bg");
+const ctx = bg.getContext("2d");
 
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(75,1,0.1,1000);
+bg.width = window.innerWidth;
+bg.height = window.innerHeight;
 
-const renderer = new THREE.WebGLRenderer({alpha:true,antialias:true});
-renderer.setSize(350,350);
+let particles=[];
+
+for(let i=0;i<120;i++){
+particles.push({
+x:Math.random()*bg.width,
+y:Math.random()*bg.height,
+size:Math.random()*4+1,
+speedY:Math.random()*1+0.2,
+speedX:Math.random()*0.5-0.25,
+type:Math.random()>0.5?"snow":"leaf"
+});
+}
+
+function draw(){
+ctx.clearRect(0,0,bg.width,bg.height);
+
+particles.forEach(p=>{
+p.x+=p.speedX;
+p.y+=p.speedY;
+
+if(p.y>bg.height){
+p.y=-10;
+p.x=Math.random()*bg.width;
+}
+
+if(p.type==="snow"){
+ctx.fillStyle="white";
+ctx.beginPath();
+ctx.arc(p.x,p.y,p.size,0,Math.PI*2);
+ctx.fill();
+}else{
+ctx.fillStyle="#8b5cf6";
+ctx.fillRect(p.x,p.y,p.size,p.size*2);
+}
+});
+
+requestAnimationFrame(draw);
+}
+
+draw();
+
+/* ================= THREE CUBE ================= */
+
+const scene=new THREE.Scene();
+const camera=new THREE.PerspectiveCamera(75,1,0.1,1000);
+
+const renderer=new THREE.WebGLRenderer({alpha:true,antialias:true});
+renderer.setSize(320,320);
 cube.appendChild(renderer.domElement);
 
-const geo = new THREE.BoxGeometry();
-const mat = new THREE.MeshStandardMaterial({
-color:0x7c3aed,
-metalness:0.8,
+const geo=new THREE.BoxGeometry();
+
+const mat=new THREE.MeshStandardMaterial({
+color:0x8b5cf6,
+metalness:0.7,
 roughness:0.2,
 emissive:0x220044
 });
 
-const cubeMesh = new THREE.Mesh(geo,mat);
+const cubeMesh=new THREE.Mesh(geo,mat);
 scene.add(cubeMesh);
 
-const light = new THREE.PointLight(0xffffff,1);
+const light=new THREE.PointLight(0xffffff,1);
 light.position.set(5,5,5);
 scene.add(light);
 
 camera.position.z=3;
-
-/* MOUSE */
 
 let mx=0,my=0;
 
@@ -228,8 +320,6 @@ document.addEventListener("mousemove",(e)=>{
 mx=(e.clientX/window.innerWidth)-0.5;
 my=(e.clientY/window.innerHeight)-0.5;
 });
-
-/* ANIMATE */
 
 let speed=0.01;
 
@@ -254,26 +344,32 @@ renderer.domElement.addEventListener("mouseleave",()=>{
 mat.emissive.setHex(0x220044);
 });
 
-/* DOUBLE CLICK EASTER EGG */
+/* DOUBLE CLICK */
 
 renderer.domElement.addEventListener("dblclick",()=>{
-speed = 0.2;
-setTimeout(()=>speed=0.01,2000);
+speed=0.2;
+setTimeout(()=>speed=0.01,1500);
 });
 
-/* KONAMI CODE */
+/* KONAMI */
 
 let keys=[];
 const code="ArrowUpArrowUpArrowDownArrowDownArrowLeftArrowRightArrowLeftArrowRightba";
 
 document.addEventListener("keydown",(e)=>{
 keys.push(e.key);
-keys.splice(-code.length-1, keys.length-code.length);
+keys.splice(-code.length-1,keys.length-code.length);
 
 if(keys.join("").includes(code)){
 document.body.style.filter="hue-rotate(180deg)";
-alert("PRO MODE ACTIVATED");
+alert("PRO MODE");
 }
+});
+
+/* RESIZE */
+window.addEventListener("resize",()=>{
+bg.width=window.innerWidth;
+bg.height=window.innerHeight;
 });
 
 /* EXTRA */
